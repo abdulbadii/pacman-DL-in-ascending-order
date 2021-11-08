@@ -18,7 +18,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -523,6 +522,8 @@ static int curl_check_finished_download(CURLM *curlm, CURLMsg *msg,
 				if(curl_retry_next_server(curlm, curl, payload) == 0) {
 					(*active_downloads_num)++;
 					return 2;
+				} else if(payload->respcode == 404) {
+					return -3;
 				} else {
 					payload->unlink_on_fail = 1;
 					goto cleanup;
@@ -857,7 +858,7 @@ static int compare_dload_payload_sizes(const void *left_ptr, const void *right_p
 	left = (struct dload_payload *) left_ptr;
 	right = (struct dload_payload *) right_ptr;
 
-	return (ASCENDING ? -1: 1) * (right->max_size - left->max_size);
+	return (ASCENDING ? -1: 1)*(right->max_size - left->max_size);
 }
 
 /* Returns -1 if an error happened for a required file
@@ -921,6 +922,12 @@ static int curl_download_internal(alpm_handle_t *handle,
 					 * current ones
 					 */
 					payloads = NULL;
+					err = -1;
+				} else if(ret == -3) {
+					alpm_event_t event = {0};
+					event.type = ALPM_EVENT_PKG_RETRIEVE_FAILED;
+					EVENT(handle, &event);
+					printf("\n");
 					err = -1;
 				} else if(ret == 0) {
 					updated = 1;
