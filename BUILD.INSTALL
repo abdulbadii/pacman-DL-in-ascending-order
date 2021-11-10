@@ -1,10 +1,10 @@
 Get into the clone dir.
-$ meson build
-$ ninja -C build
-
+$ meson build && cd build
+$ ninja
+If build succeeds and next if no need for symbol
 $ strip pacman libalpm.so.13.0.1
-$ cp build/pacman /usr/local/bin
-$ cp build/libalpm.so.13.0.1 /usr/local/lib
+$ cp pacman /usr/local/bin
+$ cp libalpm.so.13.0.1 /usr/local/lib
 $ cd /usr/local/lib
 $ ln -s libalpm.so.13.0.1 libalpm.so
 
