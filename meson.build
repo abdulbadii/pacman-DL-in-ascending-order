@@ -7,6 +7,7 @@ project('pacman',
           'prefix=/usr',
           'sysconfdir=/etc',
           'localstatedir=/var',
+          'c_link_args=-Wl,-rpath=/usr/local/lib',
           'b_lundef=false',
         ],
         meson_version : '>= 0.51')

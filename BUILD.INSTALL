@@ -1,14 +1,14 @@
-1. Get into the clone dir.
-2. $ CFLAGS=-Wl,-rpath=/usr/local/lib meson build
-3. $ ninja -C build
+Get into the clone dir.
+$ meson build
+$ ninja -C build
 
-4. $ strip pacman libalpm.so.13.0.1
-5. $ cp build/pacman /usr/local/bin
-6. $ cp build/libalpm.so.13.0.1 /usr/local/lib
-7. $ cd /usr/local/lib
-8. $ ln -s libalpm.so.13.0.1 libalpm.so
+$ strip pacman libalpm.so.13.0.1
+$ cp build/pacman /usr/local/bin
+$ cp build/libalpm.so.13.0.1 /usr/local/lib
+$ cd /usr/local/lib
+$ ln -s libalpm.so.13.0.1 libalpm.so
 
 To override official pacman, /usr/local/bin must precede its path in PATH and it is invoked by /usr/bin/pacman
 To keep official pacman prevailing, /usr/local/bin must follow its path in PATH, this pacman fork is run by /usr/local/bin/pacman
 
-Note the number on libalpm.so.13.0.1 is example as it is changing to higher one over time
+Note: the number on libalpm.so.13.0.1 is example as it is changing to higher one over time

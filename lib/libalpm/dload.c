@@ -926,8 +926,7 @@ static int curl_download_internal(alpm_handle_t *handle,
 				} else if(ret == -3) {
 					alpm_event_t event = {0};
 					event.type = ALPM_EVENT_PKG_RETRIEVE_FAILED;
-					EVENT(handle, &event);
-					printf("\n");
+					EVENT(handle, &event);printf("\n");
 					err = -1;
 				} else if(ret == 0) {
 					updated = 1;
